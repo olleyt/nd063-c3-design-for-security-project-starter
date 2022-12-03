@@ -6,6 +6,7 @@ At minimum these actions shall be taken:
 Additional recommendation for the Web Server EC2 instance
 - EBS root volume shall be encrypted and it can be specified as a parameter in the cloud formation template
 - protect the EC2 instance from accidental termination by an attacker by specifying DisableApiTermination attribute with value true
+- move the web server to a private subnet
 
 - S3 buckets:
   - encrypt S3 buckets with KMS key
