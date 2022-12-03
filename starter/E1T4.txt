@@ -23,6 +23,6 @@ I recommend to close port 22 and use System Manager Session Manger for accessing
 I also recommend to encrypt root EBS volume with a KMS key to ensure data encryption at rest.
 
 As well as this, security groups need to be modified as following:
-- Application Load Balancer security group shall allow egress traffic on port 80 only to web server security group.
-- Web Application security group shall allow inbound traffic on port 80 only from the application load balancer security group
+- Application Load Balancer security group shall allow egress traffic on port 5000 only to web server security group.
+- Web Application security group shall allow inbound traffic on port 5000 only from the application load balancer security group
 - ssh access shall be removed from the Web Application security group or at least

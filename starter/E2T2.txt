@@ -1,3 +1,11 @@
-Research and analyze which of the vulnerabilities appear to be related to the code that was deployed for the environment in this project.
+At minimum these actions shall be taken:
+- Web server EC2 instance and Application load balancer security groups:
+  - Application Load Balancer security group shall allow egress traffic on port 5000 only to web server security group.
+  - Web Application security group shall allow inbound traffic on port 5000 only from the application load balancer security group
+  - ssh access shall be removed from the Web Application security group or at least
 
-Bonus - provide recommendations on how to remediate the vulnerabilities.
+- S3 buckets:
+  - encrypt S3 buckets with KMS key
+  - create VPC end point gateway for the free recipe bucket and only the web application shall access the bucket
+  - apply bucket policies appropriately with listing specific actions that are allowed for both buckets
+  - create pre-signed URLs for the secret recipe buckets or create a path based rules on the application load balancer to this bucket
