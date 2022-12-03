@@ -1,5 +1,28 @@
-Based on the architecture diagram, and the steps you have taken so far to upload data and access the application web service, identify at least 2 obvious poor practices as it relates to security.  Include justification.
+Based on the architecture diagram, and the steps have taken so far to upload data and access the application web service,
+There are at least 2 obvious poor practices as it relates to security as discussed below.
+
 
 # Poor practice 1
+S3 buckets are not secured:
+ - S3 buckets are publicly accessible and buckets' policies are not specified with fine grain access.
+ This goes against principles of the least privilege.
+ I recommend to secure S3 buckets with at least following:
+    -- create VPC end point gateway for the free recipe bucket and only the web application shall access the bucket
+    -- apply bucket policies appropriately with listing specific actions that are allowed for both buckets
+    -- create pre-signed URLs for the secret recipe buckets or create a path based rules on the application load balancer to this bucket
+ - S3 buckets are not encrypted.
+ This opens a possibility for malicious attacks and buckets' compromise.
+ - S3 buckets' versioning option is not enabled.
+ If hackers get access to the buckets and delete or corrupt data, it would be impossible to restore it
+
 
 # Poor practice 2
+WebApplication server is placed in the public subnet.
+In addition, security groups in the VPC are opening unrestricted access to ssh port 22.
+I recommend to close port 22 and use System Manager Session Manger for accessing the web server EC2 instance.
+I also recommend to encrypt root EBS volume with a KMS key to ensure data encryption at rest.
+
+As well as this, security groups need to be modified as following:
+- Application Load Balancer security group shall allow egress traffic on port 80 only to web server security group.
+- Web Application security group shall allow inbound traffic on port 80 only from the application load balancer security group
+- ssh access shall be removed from the Web Application security group or at least
