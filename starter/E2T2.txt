@@ -3,6 +3,9 @@ At minimum these actions shall be taken:
   - Application Load Balancer security group shall allow egress traffic on port 5000 only to web server security group.
   - Web Application security group shall allow inbound traffic on port 5000 only from the application load balancer security group
   - ssh access shall be removed from the Web Application security group or at least
+Additional recommendation for the Web Server EC2 instance
+- EBS root volume shall be encrypted and it can be specified as a parameter in the cloud formation template
+- protect the EC2 instance from accidental termination by an attacker by specifying DisableApiTermination attribute with value true
 
 - S3 buckets:
   - encrypt S3 buckets with KMS key
