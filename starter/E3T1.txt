@@ -1,9 +1,13 @@
 # Describe GuardDuty findings that were detected related to the brute force attack
-GuardDuty detected brute force attack on ssh port 22 of the Web Server EC2 instance. 
+GuardDuty detected brute force attack on ssh port 22 of the Web Server EC2 instance.
 
 # Research the AWS Guard Duty documentation page and explain how GuardDuty may have detected this attack - i.e. what was its source of information.
 
 GuardDuty detects brute force attacks when incoming traffic is unrestricted on ssh port 22.
+GuardDuty uses VPC flow logs as a data source to identify a brute force attack.
+See more details in the official documentation here:
+https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_finding-types-ec2.html#unauthorizedaccess-ec2-sshbruteforce
+
 It is identified as a high risk threat as this port is often used by bots.
 It is highly recommended to close port 22 from the Internet and restrict access to it to only specific roles and identities within VPC.
 AWS recommends to close port 22 and use System Manager Session Manager instead for hardening access to EC2 instances and minimising risk of compromising EC2 instances.
