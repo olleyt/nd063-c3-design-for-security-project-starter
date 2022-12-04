@@ -18,8 +18,10 @@ S3 buckets are not secured:
 
 # Poor practice 2
 WebApplication server is placed in the public subnet.
-In addition, security groups in the VPC are opening unrestricted access to ssh port 22.
-I recommend to close port 22 and use System Manager Session Manger for accessing the web server EC2 instance.
+In addition, security groups in the VPC are opening unrestricted access to ssh port 22, unrestricted access to all ports, and unrestricted access to port 80 (HTTP).
+I recommend to:
+- close port 22 and use System Manager Session Manger for accessing the web server EC2 instance.
+- remove entries for unrestricted access to all ports as well as to port 80 for the web server security group.
 I also recommend to encrypt root EBS volume with a KMS key to ensure data encryption at rest.
 
 As well as this, security groups need to be modified as following:
