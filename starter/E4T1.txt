@@ -3,7 +3,7 @@
 # Identify 2-3 changes that can be made to our environment to prevent an ssh brute force attack from the internet.
 1. remove unrestricted access on web server security group on port 22, all ports and port 80.
 2. allow inbound traffic only on port 5000 and only from the application load balancer group.
-3. remove password authentification on the web server EC2 instances
+3. remove password authentication on the web server EC2 instances
 4. ideally move the web server to a private subnet, install SSM agent for accessing the web server, and use NAT gateway for egress traffic.
 
 # Neither instance should have had access to the secret recipes bucket, in the even that instance API credentials were compromised how could we have prevented access to sensitive data.
