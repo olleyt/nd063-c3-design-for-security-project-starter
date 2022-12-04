@@ -1,13 +1,14 @@
 
 
 # Identify 2-3 changes that can be made to our environment to prevent an ssh brute force attack from the internet.
-1. remove unrestricted access on web server security group on port 22, all ports and port 80
+1. remove unrestricted access on web server security group on port 22, all ports and port 80.
 2. allow inbound traffic only on port 5000 and only from the application load balancer group.
 3. remove password authentification on the web server EC2 instances
-4. ideally move the web server to a private subnet, install SSM agent for accessing the web server
+4. ideally move the web server to a private subnet, install SSM agent for accessing the web server, and use NAT gateway for egress traffic.
 
 # Neither instance should have had access to the secret recipes bucket, in the even that instance API credentials were compromised how could we have prevented access to sensitive data.
 I recommend to implement these actions:
 1. update IAM roles and S3 bucket policies to  allow only the web server with updated IAM role can access it. API credentials would not be required in this case.
-2. additionally the bucket shall be encrypted with a KMS CMK which is managed by a distinct security admin group
-3. enable versioning and 'MFA on delete' option to mitigate attacks on deleting or corrupting data
+2. create a VPC endpoint gateway for the bucket so the traffic originated outside of the VPC network to the S3 bucket will be blocked.
+3. additionally the bucket shall be encrypted with a KMS CMK which is managed by a distinct security admin group
+4. enable versioning and 'MFA on delete' option to mitigate attacks on deleting or corrupting data
