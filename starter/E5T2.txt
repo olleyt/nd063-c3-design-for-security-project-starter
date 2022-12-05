@@ -1,13 +1,44 @@
 # Identify tools that will allow you to do the following:
 
 ## Scan infrastructure as code templates
+- Snyk: https://snyk.io/product/infrastructure-as-code-security/
+- Trend Micro Cloud Conformity:
+https://www.trendmicro.com/en_au/business/products/hybrid-cloud/cloud-one-conformity.html
 
 ### Example vulnerability
+Examples from the scan performed by Snyk:
+1. Security Group allows open ingress
+2. Load balancer endpoint does not enforce HTTPS
+3. Non-Encrypted root block device
+
 
 ##Scan AMI’s or containers for OS vulnerabilities
+AWS native tools: ECR, GuardDuty, Inspector, and SecurityHub
+Snyk: https://snyk.io/learn/container-security/container-scanning/
+AWS Inspector:
+  - Amazon Inspector performs security assessments of Amazon EC2 instances
+  by using AWS managed rules packages such as the Common Vulnerabilities and
+  Exposures (CVEs) package:
+  https://aws.amazon.com/blogs/security/how-to-set-up-continuous-golden-ami-vulnerability-assessments-with-amazon-inspector/
 
 ### Example vulnerability
+SecurityHub example:
+  - EC2.19 Security groups should not allow unrestricted access to ports with high risk
+AWS GuardDuty examples:
+  - Kubernetes API commonly used in Persistence tactics invoked from an IP address on a custom threat list.
+  - EC2 instance i-99999999 is probing a port on a large number of publicly routable IP addresses.
+AWS Inspector example:
+  - Medium	Port 22 is reachable from an Internet Gateway
 
 ##Scan an AWS environment for cloud configuration vulnerabilities
+- AWS native tools such as Config and SecurityHub
 
 ### Example vulnerability
+1. MFA is not enabled on root account
+2. CMK keys are not rotated
+3. Config rule securityhub-alb-http-drop-invalid-header-enabled:
+Checks if rule evaluates Application Load Balancers (ALBs) to ensure they are
+configured to drop http headers. The rule is NON_COMPLIANT if
+the value of routing.http.drop_invalid_header_fields.enabled is set to false.
+4. Security Hub example: S3.8 S3 Block Public Access setting should be enabled at the bucket-level.
+This control checks if Amazon S3 buckets have bucket level public access blocks applied.
