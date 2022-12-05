@@ -1,0 +1,7 @@
+# Additional hardening suggestions to remediate in the CloudFormation templates:
+1. enable S3 bucket versioning and MFA on delete for the both buckets
+2. enable EBS encryption for the root volume of the web server EC2 instance
+3. create VPC endpoint gateway for the S3 buckets
+4. enable S3 block public ACLs control
+5. enable S3 server access logging
+6. enable secure login for the secret recipe bucket using Cognito
