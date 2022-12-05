@@ -20,8 +20,9 @@ https://aws.amazon.com/blogs/networking-and-content-delivery/introducing-aws-gat
 # would creating VPC private endpoints for S3 prevent the unauthorized access to the secrets bucket.
 Creating a VPC endpoint gateway would prevent public access to the S3 bucket and
 block traffic originating outside of the VPC.
-However, the public access to the S3 bucket shall be removed from the bucket permissions
-to prevent unauthorized access so the bucket is only accessible from the VPC endpoint.
+However, the public access to the S3 bucket shall be removed from the bucket permissions.
+Additionally, the bucket policy shall be amended to allow access only from the created VPC endpoint only.
+These actions shall prevent unauthorized access as the bucket is only accessible from the VPC endpoint.
 
 # Will applying default encryption setting to the s3 buckets encrypt the data that already exists?
 No, enabling encryption on an S3 bucket after the data was uploaded will not make
@@ -32,7 +33,7 @@ https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-encryption.html
 
 # What would happen if the original cloud formation templates are applied to this environment.
 
-The CloudFormation would delete the existing infrastructure components and recreated 
+The CloudFormation would delete the existing infrastructure components and recreated
 them as specified in the template. For this project, CloudFormation would re-instate
 all the security gaps that were remediated by the manual actions performed in the console and CLI.
 Therefore, it is important to automate template changes as CloudFormation stack sets.
