@@ -1,8 +1,40 @@
 
-# What additional architectural change can be made to reduce the internet facing attack surface of the web application instance.
+# What additional architectural change can be made to reduce the internet facing
+# attack surface of the web application instance.
 
-# Assuming the IAM permissions for the S3 bucket are still insecure, would creating VPC private endpoints for S3 prevent the unauthorized access to the secrets bucket.
+I recommend these actions:
+1) move the web server EC2 instance to a private subnet
+2) implement WAF rules and deploy WAF in front of the load balancer
+3) allow outbound traffic from the application load balancer only to
+ the web server security group
+4) install SSM agent on the web server EC2 instance and manage the web server
+EC2 instance by AWS System Manager
+5) allow egress traffic from the web server via NAT gateway
+6) implement a separate VPC with gateway load balancer to inspect all
+incoming traffic from the application load balancer by installed security appliances
+in this VPC and allow this traffic to reach the web-server if no issues identified
+See more information in this AWS excellent blog:
+https://aws.amazon.com/blogs/networking-and-content-delivery/introducing-aws-gateway-load-balancer-supported-architecture-patterns/
+
+# Assuming the IAM permissions for the S3 bucket are still insecure,
+# would creating VPC private endpoints for S3 prevent the unauthorized access to the secrets bucket.
+Creating a VPC endpoint gateway would prevent public access to the S3 bucket and
+block traffic originating outside of the VPC.
+However, the public access to the S3 bucket shall be removed from the bucket permissions
+to prevent unauthorized access so the bucket is only accessible from the VPC endpoint.
 
 # Will applying default encryption setting to the s3 buckets encrypt the data that already exists?
+No, enabling encryption on an S3 bucket after the data was uploaded will not make
+the existing data encrypted. It would be better to correct the CloudFormation template
+to set the bucket encryption at the bucket creation.
+There is an option to remediate encryption for the existing files as described here:
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-encryption.html
 
 # What would happen if the original cloud formation templates are applied to this environment.
+
+The CloudFormation would delete the existing infrastructure components and recreated 
+them as specified in the template. For this project, CloudFormation would re-instate
+all the security gaps that were remediated by the manual actions performed in the console and CLI.
+Therefore, it is important to automate template changes as CloudFormation stack sets.
+It is highly advisable to forbid applying out of bound manual changes to prevent unwelcome surprises
+such as old issues reinstatement when next CloudFormation template deployment is not reflecting all recent fixes.
